@@ -7,7 +7,7 @@ Singularity enables users to have full control of their environment. Singularity
 
 We will cover here:
 
-* [Install Singularity](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Home:-Steps-to-run-singularity-containers-on-the-Cloud)
+* [Install Singularity](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Install-Singularity)
 
 * [Build single HPC app container (MILC) and run on Google Cloud Engine (GEC)](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Build-single-HPC-app-container-(MILC)-and-run-on-Google-Cloud-Engine-(GEC))
 
