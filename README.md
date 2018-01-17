@@ -1,4 +1,4 @@
-# Intel-on-the-Cloud
+# Intel-HPC-on-the-Cloud
 Welcome to the Intel-HPC-on-the-Cloud wiki!
 
 Goal: Create Singularity containers for HPC apps and run them on the cloud for Single and Cluster runs
