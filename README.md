@@ -22,7 +22,7 @@ Singularity enables users to have full control of their environment. Singularity
 
 * [Create single HPC app container (MILC) and run on Google Cloud Engine (GEC)](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-single-HPC-app-container-(MILC)-and-run-on-Google-Cloud-Engine-(GEC))
 
-* [Create a container with multiple apps (MILC, HACC) and run on GCE](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-a-container-with-multiple-apps-(MILC,-HACC)-and-run-on-GCE)
+* [Create a container with multiple apps (MILC, HACC)E](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-a-container-with-multiple-apps-(MILC,-HACC))
 
 * [Create an HPC container(AMREX) and run with MPI on a GEC cluster](https://github.com/vtrubets/google-gotcloud/wiki/Testing-elasticluster-on-GCE) 
 * [Create a cluster on GEC with Elasticluster](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-a-cluster-on-GEC-with-Elasticluster)
