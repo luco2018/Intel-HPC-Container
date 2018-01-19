@@ -38,14 +38,14 @@ Singularity enables users to have full control of their environment. Singularity
 
   * From you "elasticlusterinstance" VM, upload files to your cluster
   
-       $ elasticluster sftp mycluster
-       $ put /home/$folder/milc.img
-       $ exit
+        $ elasticluster sftp mycluster
+        $ put /home/$folder/milc.img
+        $ exit
 
   * ssh to your cluster from your "elasticlusterinstance" :
   
-     $ 	elasticluster ssh mycluster
+        $ elasticluster ssh mycluster
 
    * Run your container
    
-     $ ./milc.img
+        $ ./milc.img
