@@ -25,5 +25,27 @@ Singularity enables users to have full control of their environment. Singularity
 * [Build a container with multiple apps (MILC, HACC) and run on GCE](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Build-a-container-with-multiple-apps-(MILC,-HACC)-and-run-on-GCE)
 
 * Build an HPC container(AMREX) and run on a GEC cluster 
+* [Create a cluster on GEC with Elasticluster](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-a-cluster-on-GEC-with-Elasticluster)
 
-To run 
+# Example workflow:
+ * In your GCE VM named "elasticlusterinstance", activate your conda envirnment:
+ 
+       $ source activate elasticluster
+   
+  * Copy any needed files and containers from your system to your cloud VM:
+  
+    	$ gcloud compute scp milc.img user@elasticlusterinstance:/home/$folder/
+
+  * From you "elasticlusterinstance" VM, upload files to your cluster
+  
+       $ elasticluster sftp mycluster
+       $ put /home/$folder/milc.img
+       $ exit
+
+  * ssh to your cluster from your "elasticlusterinstance" :
+  
+     $ 	elasticluster ssh mycluster
+
+   * Run your container
+   
+     $ ./milc.img
