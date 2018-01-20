@@ -13,7 +13,8 @@ Singularity enables users to have full control of their environment. Singularity
 * Non-authorized users having root access to any of our production networks is considered a security breech
 * To mitigate this security issue, networks must be isolated for Docker access and thus will preclude access to InfiniBand high performance networks and optimized storage platforms
 * People then build a virtual cluster within a cluster trying to navigate a solution
-* Additional complexities arise with existing scheduling architectures and workflows which greatly complicate usage models and/or system architecture (especially with parallel MPI job execution
+* Additional complexities arise with existing scheduling architectures and workflows which greatly complicate usage models and/or system architecture (especially with parallel MPI job execution.
+
 Additional details are found here: https://tin6150.github.io/psg/blogger_container_hpc.html
 
 
