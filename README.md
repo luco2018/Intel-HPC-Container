@@ -1,4 +1,4 @@
-# Intel-HPC-on-the-Cloud
+# Intel-HPC-Container
 Welcome to the Intel-HPC-on-the-Cloud wiki!
 
 # Goal:
