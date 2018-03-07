@@ -10,6 +10,7 @@ This is a container to run AMREX binarie on SKL machine. just type ./amrex.img a
 %post
 
         #get binaries and input files
+	#test
 	yum install wget
         wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
 	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/inputs
