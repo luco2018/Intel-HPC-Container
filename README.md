@@ -20,14 +20,14 @@ Additional details are found here: https://tin6150.github.io/psg/blogger_contain
 
 # We will cover here:
 
-* [Install Singularity](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Install-Singularity)
+* [Install Singularity](https://github.com/Smahane/Intel-HPC-Container/wiki/Install-Singularity)
 
-* [Create single HPC app container (MILC) and run on Google Cloud Engine (GEC)](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-single-HPC-app-container-(MILC)-and-run-on-Google-Cloud-Engine-(GEC))
+* [Create single HPC app container (MILC) and run on Google Cloud Engine (GEC)](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-single-HPC-app-container-(MILC)-and-run-on-Google-Cloud-Engine-(GEC))
 
-* [Create a container with multiple apps (MILC, HACC)](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-a-container-with-multiple-apps-(MILC,-HACC) )
+* [Create a container with multiple apps (MILC, HACC)](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-a-container-with-multiple-apps-(MILC,-HACC) )
 
-* [Create an HPC container(AMREX) and run with MPI on a GEC cluster](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-an-HPC-container(AMREX)-and-run-with-MPI-on-a-GEC-cluster) 
-* [Create a cluster on GEC with Elasticluster](https://github.intel.com/sdouyeb/Intel-on-the-Cloud/wiki/Create-a-cluster-on-GEC-with-Elasticluster)
+* [Create an HPC container(AMREX) and run with MPI on a GEC cluster](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-an-HPC-container(AMREX)-and-run-with-MPI-on-a-GEC-cluster) 
+* [Create a cluster on GEC with Elasticluster](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-a-cluster-on-GEC-with-Elasticluster)
 
 # Example workflow:
  * In your GCE VM named "elasticlusterinstance", activate your conda envirnment:
