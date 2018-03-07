@@ -1,0 +1,31 @@
+HSX-AVX2 compiled AMREX with -xCORE-AVX2
+SKL-AVX512 compiled AMREX with -xCORE-AVX512
+SKL-AVX512-zmmHigh compiled AMREX with -xCORE-AVX512 -qopt-zmm-usage=high
+
+All 3 compiled wtih Intel Compiler 2018u1.
+
+Executables correspond to Nyx/Exec/Scaling.
+
+Versions of AMREX and NYX used:
+NYX: Commit (development): 497ba068af47e6c2cfc9479818d41cb61866b935
+AMREX: Commit (development): 879429d010e93a80cf4285084ac0a36c93251668
+
+Install PSXE-runtime:
+https://software.intel.com/en-us/articles/installing-intel-parallel-studio-xe-runtime-2018-using-yum-repository
+sudo rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
+sudo rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+Sudo yum install intel-icc-runtime
+Sudo yum install intel-ifort-runtime
+Sudo yum install intel-mkl-runtime
+Sudo yum install intel-mpi-runtime
+
+Make sure to run the source script for PSXE:
+Source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+
+Add permission to execute if not already:
+chmod +x Nyx3d.intel.MPI.OMP.HSXAVX2.ex
+
+Single-node runs:
+Export OMP_NUM_THREADS=X
+
+./Nyx3d.intel.MPI.OMP.HSXAVX2.ex inputs
