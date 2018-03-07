@@ -21,8 +21,8 @@ This is a container to run AMREX binarie on SKL machine. just type ./amrex.img a
         wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
 	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/inputs
 	
-	cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $SINGULARITY_ROOTFS/tempdir
-	cp -rf inputs $SINGULARITY_ROOTFS/tempdir
+	#cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $SINGULARITY_ROOTFS/tempdir
+	#cp -rf inputs $SINGULARITY_ROOTFS/tempdir
 	
 	#installing runtime libs for virtual machines
     rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
@@ -39,11 +39,11 @@ This is a container to run AMREX binarie on SKL machine. just type ./amrex.img a
 %runscript 
     echo "This is what happens when you run the container..."
 	
-	cd $SINGULARITY_ROOTFS/tempdir/
+	#cd $SINGULARITY_ROOTFS/tempdir/
 
         source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
 	chmod +x Nyx3d.intel.MPI.OMP.SKLAVX512.ex
 	
-        result="/tmp/Nyx3d.intel.MPI.OMP.SKLAVX512.log"
+        result="Nyx3d.intel.MPI.OMP.SKLAVX512.log"
 	./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs |tee $result
 	echo "find results in /tmp/Nyx3d.intel.MPI.OMP.SKLAVX512.ex.log"
