@@ -1,0 +1,7 @@
+mpiexec.hydra -n 8 -env OMP_NUM_THREADS 5 -env KMP_AFFINITY 'granularity=fine,scatter' /localdisk/sdouyeb/milc/milc/ks_imp_rhmc/su3_rhmc_hisq.skx < params.24x24x24x24 |tee milc.su3_rhmc_hisq.skl4.log
+
+mpiexec.hydra -n 8 -env OMP_NUM_THREADS 5 -env KMP_AFFINITY 'granularity=fine,scatter' /localdisk/sdouyeb/milc/milc/ks_imp_rhmc/su3_rhmd_hisq.skx < params.24x24x24x24 |tee milc.su3_rhmd_hisq.skl4.log
+
+#parse
+
+./parse_milc.sh -l qphix -m flops -r <your-output-file> 
