@@ -1,0 +1,59 @@
+=== If no file names and line numbers are shown below, one can run
+            addr2line -Cfie my_exefile my_line_address
+    to convert `my_line_address` (e.g., 0x4a6b) into file name and line number.
+
+=== Please note that the line number reported by addr2line may not be accurate.
+    One can use
+            readelf -wl my_exefile | grep my_line_address'
+    to find out the offset for that line.
+
+ 0: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x626dd3]
+    amrex::BLBackTrace::print_backtrace_info(_IO_FILE*)
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/amrex-development-HSX-AVX2/Src/Base/AMReX_BLBackTrace.cpp:88
+
+ 1: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x627927]
+    amrex::BLBackTrace::handler(int)
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/amrex-development-HSX-AVX2/Src/Base/AMReX_BLBackTrace.cpp:51
+
+ 2: /lib64/libc.so.6(+0x35250) [0x2aea68705250]
+    ??
+    ??:0
+
+ 3: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x468116]
+    amrex::ParticleContainer<4, 0, 0, 0>::InitNRandomPerCell(int, amrex::ParticleInitType<4, 0, 0, 0> const&)
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/amrex-development-HSX-AVX2/Src/Particle/AMReX_ParticleInit.H:1183
+
+ 4: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x4330d7]
+    Nyx::init_particles()
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/Nyx-HSX-AVX2/Nyx-development/Exec/Scaling/../../Source/NyxParticles.cpp:428
+
+ 5: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x4a05c0]
+    bool std::operator==<char, std::char_traits<char>, std::allocator<char> >(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*)
+    /usr/include/c++/4.8.5/bits/basic_string.h:2521
+    Nyx::initData()
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/Nyx-HSX-AVX2/Nyx-development/Exec/Scaling/../../Source/Initialization/Nyx_initdata.cpp:262
+
+ 6: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x675332]
+    amrex::Amr::defBaseLevel(double, amrex::BoxArray const*, amrex::Array<int> const*)
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/amrex-development-HSX-AVX2/Src/Amr/AMReX_Amr.cpp:2227
+
+ 7: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x679033]
+    amrex::Amr::initialInit(double, double, amrex::BoxArray const*, amrex::Array<int> const*)
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/amrex-development-HSX-AVX2/Src/Amr/AMReX_Amr.cpp:1151
+    amrex::Amr::init(double, double)
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/amrex-development-HSX-AVX2/Src/Amr/AMReX_Amr.cpp:1023
+
+ 8: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x42aa62]
+    MemInfo::GetInstance()
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/Nyx-HSX-AVX2/Nyx-development/Exec/Scaling/../../Source/Monitors/MemInfo.H:57
+    main
+    /nfs/pdx/home/kkrommyd/AMRex/AWS_SKO/Nyx-HSX-AVX2/Nyx-development/Exec/Scaling/../../Source/main.cpp:390
+
+ 9: /lib64/libc.so.6(__libc_start_main+0xf5) [0x2aea686f1b35]
+    ??
+    ??:0
+
+10: ./Nyx3d.intel.MPI.OMP.HSXAVX2.ex() [0x40e1e9]
+    _start
+    ??:?
+
