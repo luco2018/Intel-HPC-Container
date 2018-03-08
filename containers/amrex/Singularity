@@ -16,16 +16,21 @@ This is a container to run AMREX binarie on SKL machine. just type ./amrex.img a
         fi
 	
 	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
-	    wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/inputs
+	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/inputs
+	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/runlog
+	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/probin
 	
-	    cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $SINGULARITY_ROOTFS/tempdir
-	    cp -rf inputs $SINGULARITY_ROOTFS/tempdir   
+	 cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $SINGULARITY_ROOTFS/tempdir
+	 cp -rf inputs $SINGULARITY_ROOTFS/tempdir  
+	 cp -rf runlog $SINGULARITY_ROOTFS/tempdir 
+	 cp -rf probin $SINGULARITY_ROOTFS/tempdir 
+	    
         if [ "$(ls -A $SINGULARITY_ROOTFS/tempdir/)" ]; then
                    echo "Files are copies here $SINGULARITY_ROOTFS/tempdir"
                    ls $SINGULARITY_ROOTFS/tempdir/
         fi
 
-                chmod -R 777 $SINGULARITY_ROOTFS/tempdir/*
+        chmod -R 777 $SINGULARITY_ROOTFS/tempdir/*
 
         exit 0
 	
