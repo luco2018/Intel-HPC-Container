@@ -28,6 +28,7 @@ Additional details are found here: https://tin6150.github.io/psg/blogger_contain
 
 * [Create an HPC container(AMREX) and run with MPI on a GEC cluster](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-an-HPC-container(AMREX)-and-run-with-MPI-on-a-GEC-cluster) 
 * [Create a cluster on GEC with Elasticluster](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-a-cluster-on-GEC-with-Elasticluster)
+* [Singularity Hub](https://github.com/Smahane/Intel-HPC-Container/wiki/Singularity-Hub)
 
 # Example workflow:
  * In your GCE VM named "elasticlusterinstance", activate your conda envirnment:
