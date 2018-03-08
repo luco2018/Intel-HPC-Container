@@ -57,6 +57,6 @@ This is a container to run AMREX binarie on SKL machine. just type ./amrex.img a
 	pwd
 	source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
 	ls -l Nyx3d.intel.MPI.OMP.SKLAVX512.ex
-	result="Nyx3d.intel.MPI.OMP.SKLAVX512.log"
+	result="$SINGULARITY_ROOTFS/tempdir/Nyx3d.intel.MPI.OMP.SKLAVX512.log"
 	./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs |tee $result
 	echo "find results in /tmp/Nyx3d.intel.MPI.OMP.SKLAVX512.ex.log"
