@@ -5,7 +5,7 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 
 %help
-This is a container to run AMREX binarie on SKL machine. just type ./amrex.img and it should run
+This is a container to run AMREX binarie on SKL machine.
 
 %setup
 	#Create a working directory 
