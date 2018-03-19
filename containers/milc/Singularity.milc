@@ -16,8 +16,9 @@ echo $PWD
            echo "failed to create tempdir directory..."
            exit 1
         fi
-
-        cp -r $DIR. $SINGULARITY_ROOTFS/tempdir
+	wget https://github.com/Smahane/Intel-HPC-Container/tree/master/containers/milc/run.tar.gz
+	 tar -zxvf run.tar.gz -C $SINGULARITY_ROOTFS/tempdir
+	 
         if [ "$(ls -A $SINGULARITY_ROOTFS/tempdir/)" ]; then
 		   echo "Files are copies here $SINGULARITY_ROOTFS/tempdir"
 		   ls $SINGULARITY_ROOTFS/tempdir/	
@@ -47,11 +48,11 @@ echo $PWD
 
 %runscript 
 
-	source /opt/intel/psxe_runtime_2018.1.161/linux/bin/compilervars.sh intel64
+	source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
 	echo "run milc for SKL"
 
 	cd $SINGULARITY_ROOTFS/tempdir/	
-	mpiexec.hydra -n 8 $SINGULARITY_ROOTFS/tempdir/su3_rhmd_hisq.skx < $SINGULARITY_ROOTFS/tempdir/params.24x24x24x24 |tee milc.su3_rhmd_hisq.log
+	mpiexec.hydra -n 8 $SINGULARITY_ROOTFS/tempdir/su3_rhmd_hisq.skx < $SINGULARITY_ROOTFS/tempdir/params.24x24x24x24 
 
 	./parse_milc.sh -l qphix -m flops -r milc.su3_rhmd_hisq.log
 
