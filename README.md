@@ -49,6 +49,8 @@ Additional details are found here: https://tin6150.github.io/psg/blogger_contain
   
         $ elasticluster ssh mycluster
 
+  * pull Singularity container image:
+  
    * Run your container
    
         $ ./milc.img
