@@ -52,7 +52,7 @@ echo $PWD
 	echo "run milc for SKL"
 
 	cd $SINGULARITY_ROOTFS/tempdir/run/	
-	mpiexec.hydra -n 8 $SINGULARITY_ROOTFS/tempdir/su3_rhmd_hisq.skx < $SINGULARITY_ROOTFS/tempdir/params.24x24x24x24 
+	mpiexec.hydra -n 8 $SINGULARITY_ROOTFS/tempdir/su3_rhmd_hisq.skx < $SINGULARITY_ROOTFS/tempdir/params.24x24x24x24 |tee milc.su3_rhmd_hisq.log
 
 	./parse_milc.sh -l qphix -m flops -r milc.su3_rhmd_hisq.log
 
