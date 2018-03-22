@@ -1,6 +1,6 @@
-Amrex
+# Amrex 
 
-for more information, please visit https://amrex-astro.github.io/Nyx/about.html
+For more information, please visit https://amrex-astro.github.io/Nyx/about.html
 
 ## Get amrex image:
 
