@@ -6,7 +6,7 @@ Include: yum
 
 %help
 This is a container to run AMREX binarie on SKL machine.
- - Pull the image:
+ - Pull the image from SIngularity Hub:
  	singularity pull shub://intel/Intel-HPC-Container:amrex
  - Run the image:
  	./intel-Intel-HPC-Container-amrex
