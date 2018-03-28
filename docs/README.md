@@ -18,7 +18,7 @@ Singularity enables users to have full control of their environment. Singularity
 
 ### Single node setup
   -   Create a GCE [instance](https://cloud.google.com/compute/docs/instances/create-start-instance)
-  -   [Install Singularity ] (http://singularity.lbl.gov/docs-installation)
+  -   [Install Singularity ](http://singularity.lbl.gov/docs-installation)
   -   Get the container (see one of the "Available Containers: example above)
   -   Run the container
    
