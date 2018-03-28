@@ -17,34 +17,31 @@ Singularity enables users to have full control of their environment. Singularity
 # Example workflow using Google Cloud Engine:
 
 ### Single node setup
-  -   Create a GCE
-  -   Install Singularity and run time libraries
-  -   Get the container
+  -   Create a GCE [instance](https://cloud.google.com/compute/docs/instances/create-start-instance)
+  -   [Install Singularity ] (http://singularity.lbl.gov/docs-installation)
+  -   Get the container (see one of the "Available Containers: example above)
   -   Run the container
    
           $ ./container.simg
 
 
-###  Multinode (cluster) setup:
+###  Multinode (cluster) setup: 
+  
+  For more details of how to setup a cluster, see https://github.com/Smahane/HPC-Container/wiki/Create-a-cluster-on-GEC-with-Elasticluster
+  
  * In your GCE VM named "elasticlusterinstance", activate your conda envirnment:
  
        $ source activate elasticluster
-   
-  * Copy any needed files and containers from your system to your cloud VM:
-  
-    	$ gcloud compute scp milc.img user@elasticlusterinstance:/home/$folder/
-
-  * From you "elasticlusterinstance" VM, upload files to your cluster
-  
-        $ elasticluster sftp mycluster
-        $ put /home/$folder/milc.img
-        $ exit
-
-  * ssh to your cluster from your "elasticlusterinstance" :
+ 
+  * ssh to your previously created cluster from your "elasticlusterinstance" :
   
         $ elasticluster ssh mycluster
 
-   * Run your container
+  * Get the container (see one of the "Available Containers: example above)
+  
+    	$ singularity pull shub://intel/Intel-HPC-Container:$container
+   
+   * Run your container (see one of the "Available Containers: example above)
    
          $  mpirun -hostfile nodelist -n 4 -ppn 1 -genv OMP_NUM_THREADS=$NUM_THREADS ./$container.simg
         
