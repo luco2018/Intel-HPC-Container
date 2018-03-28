@@ -17,7 +17,7 @@ Singularity enables users to have full control of their environment. Singularity
 # Example workflow using Google Cloud Engine:
 
 ### Single node setup
-  -   Create a GCE [instance](https://cloud.google.com/compute/docs/instances/create-start-instance)
+  -   [Create a GCE instance](https://cloud.google.com/compute/docs/instances/create-start-instance)
   -   [Install Singularity ](http://singularity.lbl.gov/docs-installation)
   -   Get the container (see one of the "Available Containers: example above)
   -   Run the container
