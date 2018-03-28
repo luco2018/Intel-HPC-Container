@@ -10,13 +10,16 @@ For more information, please visit https://amrex-astro.github.io/Nyx/about.html
 
 1.  In Detached mode:
 
-	$ source setup.sh
-	$ ./intel-Intel-HPC-Container-master-amrex.simg
+        $ source setup.sh
+        $ ./intel-Intel-HPC-Container-master-amrex.simg
+
 2.  In Attached mode: 
 
-	$ singularity shell intel-Intel-HPC-Container-master-amrex.simg
-	$ cd /temp/
+        $ singularity shell intel-Intel-HPC-Container-master-amrex.simg
+        $ cd /temp/
+        $ source /opt/intel/<$runtimecompilerversion>/bin/compilervars.sh intel64
+        $./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs
 
 ## Run amrex on a cluster
 
-	$ mpirun -hostfile nodes -n 4 -ppn 1 -genv OMP_NUM_THREADS=40 ./intel-Intel-HPC-Container-master-amrex.simg
+        $ mpirun -hostfile nodelist -n 4 -ppn 1 -genv OMP_NUM_THREADS=40 ./intel-Intel-HPC-Container-master-amrex.simg
