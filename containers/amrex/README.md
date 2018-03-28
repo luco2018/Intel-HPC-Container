@@ -4,6 +4,8 @@ For more information, please visit https://amrex-astro.github.io/Nyx/about.html
 
 ## Get amrex image:
 
+On a system that has Singularity installed:
+
 	$ singularity pull shub://intel/Intel-HPC-Container:amrex
 
 ## Run amrex on single node:
