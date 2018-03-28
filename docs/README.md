@@ -10,9 +10,9 @@ Singularity enables users to have full control of their environment. Singularity
 
 # Available Containers
 
-* [Amrex](https://github.com/intel/Intel-HPC-Container/blob/master/docs/pages/amrex.md)
+* [Amrex](https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/README.md)
 
-* [Milc](https://github.com/intel/Intel-HPC-Container/blob/master/docs/pages/milc.md)
+* [Milc](https://github.com/intel/Intel-HPC-Container/blob/master/containers/milc/README.md)
 
 # Example workflow using Google Cloud Engine:
 
@@ -46,5 +46,5 @@ Singularity enables users to have full control of their environment. Singularity
 
    * Run your container
    
-         $  mpirun -hostfile nodes -n 4 -ppn 1 -genv OMP_NUM_THREADS=$NUM_THREADS ./$container.simg
+         $  mpirun -hostfile nodelist -n 4 -ppn 1 -genv OMP_NUM_THREADS=$NUM_THREADS ./$container.simg
         
