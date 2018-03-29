@@ -10,7 +10,7 @@ echo "this is a container to run MILC binarie on SKL machine"
 %setup
 echo $PWD
         
-        #create a working directory
+        #create a working directory inside the container
         mkdir -p $SINGULARITY_ROOTFS/tempdir
         if [ ! -x "$SINGULARITY_ROOTFS/tempdir" ]; then
            echo "failed to create tempdir directory..."
