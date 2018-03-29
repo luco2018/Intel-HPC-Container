@@ -12,7 +12,6 @@ On a system that has Singularity installed:
 
 1.  In Detached mode:
 
-        $ source setup.sh
         $ ./intel-Intel-HPC-Container-master-amrex.simg
 
 2.  In Attached mode: 
