@@ -20,6 +20,8 @@ Additional details are found here: https://tin6150.github.io/psg/blogger_contain
 
 # We will cover here:
 
+* [Run a container form Singularity Hub](https://github.com/intel/Intel-HPC-Container/blob/master/docs/README.md)
+
 * [Install Singularity](https://github.com/Smahane/Intel-HPC-Container/wiki/Install-Singularity)
 
 * [Create single HPC app container (MILC) and run on Google Cloud Engine (GEC)](https://github.com/Smahane/Intel-HPC-Container/wiki/Create-single-HPC-app-container-(MILC)-and-run-on-Google-Cloud-Engine-(GEC))
