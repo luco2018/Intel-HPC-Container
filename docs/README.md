@@ -1,12 +1,8 @@
-# Intel-HPC-Container
-Welcome to the Intel HPC Container
+
+# Welcome to the Intel HPC Container
 
 # Goal:
-Create Singularity containers for HPC apps and run them on the cloud for Single and Cluster runs
-
-# Singularity ?
-Singularity enables users to have full control of their environment. Singularity containers can be used to package entire scientific workflows, software and libraries, and even data. This means that you don’t have to ask your cluster admin to install anything for you - you can put it in a Singularity container and run. More information are available on the main website Singularity
-
+Get a single file based [Singularity](http://singularity.lbl.gov/) container image for HPC apps & run it on the cloud or other various compute infrastructures for both Single node and Clusters
 
 # Available Containers
 
