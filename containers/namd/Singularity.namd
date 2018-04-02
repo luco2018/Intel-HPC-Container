@@ -19,7 +19,7 @@ This is a container to run NAMD binarie on SKL machine.
            exit 1
         fi
 	
-	wget https://github.com/Smahane/Intel-HPC-Container/tree/master/containers/namd/run.tar
+	wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/run.tar
 	
 	WORKDIR="$SINGULARITY_ROOTFS/opt/intel/"
 	tar -zxvf run.tar -C $WORKDIR --strip-components=1
