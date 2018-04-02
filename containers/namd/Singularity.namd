@@ -14,7 +14,7 @@ This is a container to run NAMD binarie on SKL machine.
 %setup
 	#Create a working directory 
         mkdir -p $SINGULARITY_ROOTFS/opt/intel/
-        if [ ! -x "$SINGULARITY_ROOTFS/tempdir" ]; then
+        if [ ! -x "$SINGULARITY_ROOTFS/opt/intel/" ]; then
            echo "failed to create tempdir directory..."
            exit 1
         fi
