@@ -54,6 +54,6 @@ This is a container to run NAMD binarie on SKL machine.
 	cd $SINGULARITY_ROOTFS/opt/intel/
 
 	source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
-	./namd2_16u4 +p 40 input/apoa1.namd +pemap 0-39
-	./namd2_16u4 +p 40 input/stmv.namd +pemap 0-39
+	./namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
+	./namd2_16u4 +p 40 stmv/stmv.namd +pemap 0-39
 	echo "NAMD run completed"
