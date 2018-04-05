@@ -1,0 +1,22 @@
+BootStrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+
+Include: yum
+
+%help
+
+%post
+	yum install wget -y
+       		
+	#installing runtime libs for virtual machines
+        rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
+	rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+	yum install intel-psxe-runtime -y
+
+	#installing gcc
+        yum install gcc -y
+        yum install bc -y
+
+%runscript 
+        echo "This is what happens when you run the container..."
