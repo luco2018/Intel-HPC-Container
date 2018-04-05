@@ -12,7 +12,7 @@ This is a container to run NAMD binarie on SKL machine.
  	./intel-Intel-HPC-Container-namd
 
 %setup
-	#Create a working directory 
+	# Create a working directory 
 
         WORKDIR="$SINGULARITY_ROOTFS/opt/intel/namd"
         mkdir -p $WORKDIR
