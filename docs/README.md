@@ -1,7 +1,7 @@
 
 # Welcome to the Intel HPC Container
 
-Are you in need to run or install an optimized HPC application on your cloud environment? Do you need to get the source code, the right compiler version and any dependencies and go through the challenge of building and compiling the code? Please skip the challenges and reduce the complexity. Browse our available containers, choose the Intel HPC container of your choice, and run it.
+Do you in need to run or install an optimized HPC application on your cloud environment? Do you need to get the source code, the right compiler version and any dependencies and go through the challenge of building and compiling the code? Please skip the challenges and reduce the complexity. Browse our available containers, choose the Intel HPC container of your choice, and run it.
 
 # Goal:
 Get a single file based [Singularity](http://singularity.lbl.gov/) container image for the HPC app of your choice & run it on the cloud or other various compute infrastructures for both Single node and Clusters
