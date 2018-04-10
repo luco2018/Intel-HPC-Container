@@ -20,16 +20,16 @@ This is a container to run NAMD binarie on SKL machine.
         fi
 
         #get binaries and input files
-        wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_16u4.tar.gz 
-        wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_mpi_SKX_16u4.tar.gz
-        wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_SKX_mpi_MEP.tar.gz
+        wget ftp://ftp.intel.com/pub/outgoing/namd2_16u4 
+        #wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_mpi_SKX_16u4.tar.gz
+        #wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_SKX_mpi_MEP.tar.gz
 
         wget http://www.ks.uiuc.edu/Research/namd/utilities/stmv.tar.gz
         wget http://www.ks.uiuc.edu/Research/namd/utilities/apoa1.tar.gz
 	
-        tar -xvf namd2_16u4.tar.gz -C $WORKDIR
-        tar -xvf namd2_mpi_SKX_16u4.tar.gz -C $WORKDIR
-        tar -xvf namd2_SKX_mpi_MEP.tar.gz -C $WORKDIR
+        #tar -xvf namd2_16u4.tar.gz -C $WORKDIR
+        #tar -xvf namd2_mpi_SKX_16u4.tar.gz -C $WORKDIR
+        #tar -xvf namd2_SKX_mpi_MEP.tar.gz -C $WORKDIR
         tar -xvf stmv.tar.gz -C $WORKDIR 
         tar -xvf apoa1.tar.gz -C $WORKDIR 
  
