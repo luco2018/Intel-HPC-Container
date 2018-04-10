@@ -21,6 +21,7 @@ This is a container to run NAMD binarie on SKL machine.
 
         #get binaries and input files
         wget ftp://ftp.intel.com/pub/outgoing/namd2_16u4 
+	wget ftp://ftp.intel.com/Pub/Outgoing/namd2_16u4.tar.gz  
         #wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_mpi_SKX_16u4.tar.gz
         #wget https://github.com/intel/Intel-HPC-Container/tree/master/containers/namd/bin/namd2_SKX_mpi_MEP.tar.gz
 
