@@ -19,10 +19,10 @@ This is a container to run AMREX binarie on SKL machine.
            exit 1
         fi
 	
-	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
-	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/inputs
-	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/runlog
-	wget https://github.com/Smahane/Intel-HPC-Container/blob/master/containers/amrex/probin
+	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
+	wget https://github.com/Smahane/Intel-HPC-Container/raw/master/containers/amrex/inputs
+	wget https://github.com/Smahane/Intel-HPC-Container/raw/master/containers/amrex/runlog
+	wget https://github.com/Smahane/Intel-HPC-Container/raw/master/containers/amrex/probin
 	
 	 cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $SINGULARITY_ROOTFS/tempdir
 	 cp -rf inputs $SINGULARITY_ROOTFS/tempdir  
