@@ -48,6 +48,8 @@ This is a container to run NAMD binarie on SKL machine.
 	
 %post
 	yum install wget -y
+	yum -y install which
+	yum -y install vi
        		
 	#installing runtime libs for virtual machines
         rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
