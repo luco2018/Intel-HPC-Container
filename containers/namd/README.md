@@ -2,9 +2,17 @@
 
 NAMD is a parallel molecular dynamics code designed for high-performance simulation of large biomolecule systems. Based on Charm++ parallel objects, NAMD scales to hundreds of cores for typical simulations and beyond 500,000 cores for the largest simulations. NAMD uses the popular molecular graphics program VMD for simulation setup and trajectory analysis, but is also file-compatible with AMBER, CHARMM, and X-PLOR.
 
-NAMD is distributed free of charge with source code. You can build NAMD yourself or download binaries for a wide variety of platforms. Below are the details of how to get and run NAMD container on Intel Intel Xeon processor E5 family for single and cluster nodes.
+NAMD is distributed free of charge with source code. You can build NAMD yourself or download binaries for a wide variety of platforms. Below are the details of how to get and run NAMD container on Intel Xeon processor E5 family for single and cluster nodes.
 
 ***
+
+> PS: Note that the following prerequisites must be fulfilled before running the container:
+
+- Intel Xeon processor E5 based system or cluster. Cloud or bare metal 
+
+- Singularity must be installed and operational
+
+See instructions [here](https://github.com/intel/Intel-HPC-Container/wiki/3.-Documentation-running-CSPs)
 
 # Running instructions:
 The NAMD containers provides three NAMD binaries available inside the container at /opt/intel/namd:
@@ -27,7 +35,7 @@ You can pull the namd container image form the Singularity hub as follow:
 	
         $ ./intel-Intel-HPC-Container-master-namd.simg
 
-2. With the [the exec command](http://singularity.lbl.gov/docs-exec): 
+2.  With the [the exec command](http://singularity.lbl.gov/docs-exec): 
 
 	   $ singularity exec intel-Intel-HPC-Container-master-namd.simg /opt/intel/namd/namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
 	
@@ -37,7 +45,7 @@ This will run the namd2_16u4 with the provided Apoa1 and Stmv workloads with:
          ppn=40 ,   numsteps: 1000 ,   outputtiming: 20 ,  outputenergies: 600 
   
 
-2.  In Attached mode: 
+3.  In Attached mode: 
 
         $ singularity shell intel-Intel-HPC-Container-master-namd.simg
         $ cd /opt/intel/namd/
@@ -54,9 +62,11 @@ Example to run with your custom workload:
         $ ./namd2 +p $ppn $LocalPath/apoa1/apoa1.namd +pemap 0-($ppn-1)
 
 ***
-## Run namd on a cluster
+## Run namd on a cluster:
 
-        $ mpirun -hostfile nodelist 
+After you setup your cluser, specify host names to run on in “hosts” file. Here is an example:
+
+        $ mpiexec.hydra -hostfile ./node -n 1 -ppn 1 ./namd2_mpi_SKX_16u4 +pemap 1-39 +commap  
 
 ***
 
