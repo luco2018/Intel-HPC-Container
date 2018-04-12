@@ -65,8 +65,11 @@ Example to run with your custom workload:
 ## Run namd on a cluster:
 
 After you setup your cluser, specify host names to run on in “hosts” file. Here is an example:
-
-        $ mpiexec.hydra -hostfile ./node -n 1 -ppn 1 ./namd2_mpi_SKX_16u4 +pemap 1-39 +commap  
+      
+        $ sudo singularity build --writable namd.img shub://intel/Intel-HPC-Container:namd
+	$ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
+        $ source /opt/intel/psxe_runtime/linux/mpi/intel64/bin/mpivars.sh
+	$ mpiexec.hydra -hostfile ./nodelist -n 4 -ppn 2 singularity exec namd.img /opt/intel/namd/namd2_mpi_SKX_16u4 +ppn 39 apoa1/apoa1.namd +pemap 1-39 +commap 0  
 
 ***
 
