@@ -27,9 +27,14 @@ You can pull the namd container image form the Singularity hub as follow:
 	
         $ ./intel-Intel-HPC-Container-master-namd.simg
 
+2. With the [the exec command](http://singularity.lbl.gov/docs-exec): 
+
+	   $ singularity exec intel-Intel-HPC-Container-master-namd.simg /opt/intel/namd/namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
+	
+	
 This will run the namd2_16u4 with the provided Apoa1 and Stmv workloads with:
 
-   ppn=40 ,   numsteps: 1000 ,   outputtiming: 20 ,  outputenergies: 600 
+         ppn=40 ,   numsteps: 1000 ,   outputtiming: 20 ,  outputenergies: 600 
   
 
 2.  In Attached mode: 
@@ -46,7 +51,7 @@ Example to run with your custom workload:
 	$ singularity shell intel-Intel-HPC-Container-master-namd.simg
         $ cd /opt/intel/namd/
         $ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
-        $ ./namd2 +p $ppn apoa1/apoa1.namd +pemap 0-($ppn-1)
+        $ ./namd2 +p $ppn $LocalPath/apoa1/apoa1.namd +pemap 0-($ppn-1)
 
 ***
 ## Run namd on a cluster
