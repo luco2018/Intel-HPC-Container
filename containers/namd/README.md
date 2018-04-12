@@ -28,10 +28,9 @@ You can pull the namd container image form the Singularity hub as follow:
         $ ./intel-Intel-HPC-Container-master-namd.simg
 
 This will run the namd2_16u4 with the provided Apoa1 and Stmv workloads with:
-	ppn=40
-	numsteps: 1000
-        outputtiming: 20
-        outputenergies: 600
+
+   ppn=40 ,   numsteps: 1000 ,   outputtiming: 20 ,  outputenergies: 600 
+  
 
 2.  In Attached mode: 
 
@@ -54,6 +53,7 @@ Example to run with your custom workload:
 
         $ mpirun -hostfile nodelist 
 
+***
 
 ### Recommended links:
 NAMD user's Guide: http://www.ks.uiuc.edu/Research/namd/
