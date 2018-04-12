@@ -37,17 +37,15 @@ cp /localdisk/sdouyeb/lammps/* $WORKDIR
         yum install bc -y
 
 %environment
+  source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+  source /opt/intel/psxe_runtime/linux/mpi/bin64/mpivars.sh
+  source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64
   export I_MPI_SHM_LMT=shm
 	
 %runscript 
 
 WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
 cd $WORKDIR
-
-source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
-source /opt/intel/psxe_runtime/linux/mpi/bin64/mpivars.sh
-source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64
-export I_MPI_SHM_LMT=shm
 
 NUMCORES=40
 
