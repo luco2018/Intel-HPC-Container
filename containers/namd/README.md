@@ -2,15 +2,17 @@
 
 NAMD is a parallel molecular dynamics code designed for high-performance simulation of large biomolecule systems. Based on Charm++ parallel objects, NAMD scales to hundreds of cores for typical simulations and beyond 500,000 cores for the largest simulations. NAMD uses the popular molecular graphics program VMD for simulation setup and trajectory analysis, but is also file-compatible with AMBER, CHARMM, and X-PLOR.
 
-NAMD is distributed free of charge with source code. You can build NAMD yourself or download binaries for a wide variety of platforms. Below are the details of how to get and run NAMD container on Intel Xeon processor E5 family for single and cluster nodes.
+NAMD is distributed free of charge with source code. You can build NAMD yourself or download binaries for a wide variety of platforms. 
+
+Below are the details of how to get and run NAMD container for best performance on Intel Xeon processor E5 family for single and cluster nodes.
 
 ***
 
 > PS: Note that the following prerequisites must be fulfilled before running the container:
 
-- Intel Xeon processor E5 based system or cluster. Cloud or bare metal 
+   - Intel Xeon processor E5 based system or cluster. Cloud or bare metal 
 
-- Singularity must be installed and operational
+   - Singularity must be installed and operational
 
 See instructions [here](https://github.com/intel/Intel-HPC-Container/wiki/3.-Documentation-running-CSPs)
 
@@ -52,7 +54,7 @@ This will run the namd2_16u4 with the provided Apoa1 and Stmv workloads with:
         $ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
         $ ./namd2 +p 40 apoa1.namd +pemap 0-39
 
-> PS. You can choose to run with your prefered workload. The container should have your home directory mounted or you can bind your prefered directory. [See here](https://singularity.lbl.gov/docs-mount) 
+> PS. You can choose to run with your preferred workload. The container should have your home directory mounted or you can bind your preferred directory. [See here](https://singularity.lbl.gov/docs-mount) 
 
 Example to run with your custom workload:
 
@@ -64,7 +66,7 @@ Example to run with your custom workload:
 ***
 ## Run namd on a cluster:
 
-After you setup your cluser, specify host names to run on in “hosts” file. Here is an example:
+After you setup your cluster, specify host names to run on in “hosts” file. Here is an example:
       
         $ sudo singularity build --writable namd.img shub://intel/Intel-HPC-Container:namd
 	$ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
