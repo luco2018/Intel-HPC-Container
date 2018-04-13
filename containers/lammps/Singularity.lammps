@@ -10,11 +10,12 @@ Include: yum
 WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
         mkdir -p $WORKDIR
         if [ ! -x "$WORKDIR" ]; then
-           echo "failed to create tempdir directory..."
+           echo "failed to create working directory..."
            exit 1
        fi
 
-cp /localdisk/sdouyeb/lammps/* $WORKDIR
+        wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/lammps/bin.tar.gz
+        tar -xvf bin.tar.gz -C $WORKDIR --strip-components=1
 
         if [ "$(ls -A $WORKDIR)" ]; then
            echo "Files are copies here $WORKDIR"
@@ -26,6 +27,8 @@ cp /localdisk/sdouyeb/lammps/* $WORKDIR
 
 %post
 	yum install wget -y
+        yum -y install which
+	yum -y install vi
        		
 	#installing runtime libs for virtual machines
         rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
@@ -47,9 +50,14 @@ cp /localdisk/sdouyeb/lammps/* $WORKDIR
 WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
 cd $WORKDIR
 
-NUMCORES=40
+NUMCORES="$@"
+if [ -z "$NUMCORES" ]; then
+        NUMCORES=40
+	echo "You didn't specify number of cores. So running with 40 cores"
+fi
 
 files=`echo in.intel.*`
+
 for file in $files
 do
   name=`echo $file | sed 's/in\.intel\.//g'`
