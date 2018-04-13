@@ -37,7 +37,7 @@ You can pull the namd container image form the Singularity hub as follow:
 	
         $ ./intel-Intel-HPC-Container-master-namd.simg
 
-2.  With the [the exec command](http://singularity.lbl.gov/docs-exec): 
+2.  With the [exec](http://singularity.lbl.gov/docs-exec) command: 
 
 	   $ singularity exec intel-Intel-HPC-Container-master-namd.simg /opt/intel/namd/namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
 	
