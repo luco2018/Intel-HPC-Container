@@ -4,7 +4,7 @@ Large-scale Atomic/Molecular Massively Parallel Simulator (LAMMPS) is a classica
 
 LAMMPS runs on single processors or in parallel using message-passing techniques with a spatial-decomposition of the simulation domain. The code is designed to be easy to modify or extend with new functionality.
 
-Below are the details of how to get and run LAMMPS container for best performance on Intel Xeon processor E5 family for single and cluster nodes.
+Below are the details of how to get and run LAMMPS container for best performance on Intel® Xeon® Gold family for single and cluster nodes.
 
 ***
 > PS: Note that the following prerequisites must be fulfilled before running the container:
@@ -27,9 +27,9 @@ You can pull the lammps container image form the Singularity hub as follow:
 
 	$ singularity pull shub://intel/Intel-HPC-Container:lammps
 
-OR you can build an image using the base:
+OR you can build a writable image using the base:
 
-        $ sudo singularity build lammps.img shub://intel/Intel-HPC-Container:lammps
+        $ sudo singularity build --writable lammps.img shub://intel/Intel-HPC-Container:lammps
 ***
 ## Run lammps on single node:
 
@@ -51,7 +51,7 @@ This will run the binary lmp_intel_cpu_intelmpi with all the workloads
         $ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
         $ mpirun -np 40 ./lmp_intel_cpu_intelmpi -in in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.lj.log
 
-> PS. You can choose to run with your preferred workload. The container should have your home directory mounted or you can bind your preferred directory. [See here](https://singularity.lbl.gov/docs-mount). Or run with the exec command: 
+> PS. You can choose to run with your preferred workload. The container should have your home directory mounted or you can bind your preferred directory. [See here](https://singularity.lbl.gov/docs-mount). You can also run with the exec command. 
 
 Example to run with your custom workload:
 
@@ -61,8 +61,33 @@ Example to run with your custom workload:
 
 ## Run lammps on a cluster:
 
-After you setup your cluster, specify host names to run on in “hosts” file. Here is an example:
+To run the container on multinode, you need to do the following:
 
+ * Setup your cluster
+ * Get the lammps container
+ * Source the compiler, mpi and mkl
+ * Specify host names to run on in “hosts” file
+ * Select a communication and Nextork fabric at runtime
+ 
+ Here is an example to run interactively on 4 node with 24 cores/socket:
+
+	$ cat nodelist 
+	container-compute001
+	container-compute002
+	container-compute003
+	container-compute004
+	
+	source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
+        source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh 
+        source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64 
+	
+	$ export I_MPI_FABRICS=shm:tcp     # Set the tcp fabric to be used for communication between nodes
+        $ export I_MPI_DEVICE=ssm          # Set TCP + shared memory (for SMP clusters connected via Ethernet)
+
+        # run lammps on 4  Intel® Xeon® Gold nodes
+	$ mpirun -hostfile nodelist -ppn 48 -np 192 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in /opt/intel/lammps/in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2
+
+***
 ### Recommended links:
 
 * [Lammps documentation on Intel platforms](http://lammps.sandia.gov/doc/accelerate_intel.html)
