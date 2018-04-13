@@ -78,13 +78,13 @@ To run the container on multinode, you need to do the following:
 	container-compute004
 	
 	source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
-        source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh 
-        source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64 
+	source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh
+	source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64 
 	
 	$ export I_MPI_FABRICS=shm:tcp     # Set the tcp fabric to be used for communication between nodes
-        $ export I_MPI_DEVICE=ssm          # Set TCP + shared memory (for SMP clusters connected via Ethernet)
-
-        # run lammps on 4  Intel® Xeon® Gold nodes
+	$ export I_MPI_DEVICE=ssm          # Set TCP + shared memory (for SMP clusters connected via Ethernet)
+	
+	# run lammps on 4  Intel® Xeon® Gold nodes
 	$ mpirun -hostfile nodelist -ppn 48 -np 192 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in /opt/intel/lammps/in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2
 
 ***
