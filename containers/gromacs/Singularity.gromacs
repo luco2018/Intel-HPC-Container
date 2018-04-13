@@ -1,0 +1,49 @@
+BootStrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+
+Include: yum
+
+%setup
+
+
+WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
+        mkdir -p $WORKDIR
+        if [ ! -x "$WORKDIR" ]; then
+           echo "failed to create working directory..."
+           exit 1
+       fi
+
+
+        if [ "$(ls -A $WORKDIR)" ]; then
+           echo "Files are copies here $WORKDIR"
+        fi
+
+        chmod -R 777 $WORKDIR
+
+        exit 0
+
+%post
+	yum install wget -y
+        yum -y install which
+	yum -y install vi
+       		
+	#installing runtime libs for virtual machines
+        rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
+	rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+	yum install intel-psxe-runtime -y
+
+	#installing gcc
+        yum install gcc -y
+        yum install bc -y
+
+%environment
+  source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+  source /opt/intel/psxe_runtime/linux/mpi/bin64/mpivars.sh
+  source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64
+  export I_MPI_SHM_LMT=shm
+	
+%runscript 
+
+WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
+cd $WORKDIR
