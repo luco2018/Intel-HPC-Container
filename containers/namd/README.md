@@ -4,7 +4,7 @@ NAMD is a parallel molecular dynamics code designed for high-performance simulat
 
 NAMD is distributed free of charge with source code. You can build NAMD yourself or download binaries for a wide variety of platforms. 
 
-Below are the details of how to get and run NAMD container for best performance on Intel Xeon processor E5 family for single and cluster nodes.
+Below are the details of how to get and run NAMD container for best performance on Intel® Xeon® Gold family for single and cluster nodes.
 
 ***
 
@@ -30,6 +30,9 @@ You can pull the namd container image form the Singularity hub as follow:
 
 	$ singularity pull shub://intel/Intel-HPC-Container:namd
 
+OR you can build an image using the base:
+
+        $ sudo singularity build namd.img shub://intel/Intel-HPC-Container:namd
 ***
 ## Run namd on single node:
 
@@ -39,7 +42,7 @@ You can pull the namd container image form the Singularity hub as follow:
 
 2.  With the [exec](http://singularity.lbl.gov/docs-exec) command: 
 
-	   $ singularity exec intel-Intel-HPC-Container-master-namd.simg /opt/intel/namd/namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
+	    $ singularity exec intel-Intel-HPC-Container-master-namd.simg /opt/intel/namd/namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
 	
 	
 This will run the namd2_16u4 with the provided Apoa1 and Stmv workloads with:
