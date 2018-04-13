@@ -16,10 +16,8 @@ Below are the details of how to get and run LAMMPS container for best performanc
 See instructions [here](https://github.com/intel/Intel-HPC-Container/wiki/3.-Documentation-running-CSPs)
 
 # Running instructions:
-The LAMMPS container includes the following workloads and binary: 
- 
-    in.intel.airebo  in.intel.eam  in.intel.lj     in.intel.sw       in.intel.water       
-    in.intel.dpd     in.intel.lc   in.intel.rhodo  in.intel.tersoff  lmp_intel_cpu_intelmpi
+
+The LAMMPS container includes a binary optimized for AVX-512 and Intel MPI (lmp_intel_cpu_intelmpi) and example workloads included with LAMMPS for simulation of a simple atomic fluid (lj), a protein (rhodo), polyethelene (airebo), a coarse-grain liquid crystal (lc), dissipative particle dynamics (dpd), copper (eam), silicon (sw/tersoff), and coarse-grain water (water).
 
 ## Get lammps image:
 
@@ -39,23 +37,25 @@ OR you can build a writable image using the base:
 
 This will run the binary lmp_intel_cpu_intelmpi with all the workloads
 
-2.  With the [exec](http://singularity.lbl.gov/docs-exec) command. For example: 
+2.  With the [exec](http://singularity.lbl.gov/docs-exec) command.
+
+ For example to run the polyethelene example:”  
 
         $ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
-        $ mpirun -np 40 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in /opt/intel/lammps/in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.lj.log
+        $ mpirun -np 40 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in /opt/intel/lammps/in.intel.airebo -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.lj.log
 	
 3.  In Attached mode: 
        
         $ singularity shell lammps.img
         $ cd /opt/intel/lammps
         $ source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
-        $ mpirun -np 40 ./lmp_intel_cpu_intelmpi -in in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.lj.log
+        $ mpirun -np 40 ./lmp_intel_cpu_intelmpi -in in.intel.airebo -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.lj.log
 
-> PS. You can choose to run with your preferred workload. The container should have your home directory mounted or you can bind your preferred directory. [See here](https://singularity.lbl.gov/docs-mount). You can also run with the exec command. 
+> PS. To run with your own workload, the container should have your home directory mounted or you can bind your preferred directory. [See here](https://singularity.lbl.gov/docs-mount). You can also run with the exec command. 
 
-Example to run with your custom workload:
+Example to run with your own workload:
 
-    $ mpirun -np 40 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in <LOCALDIR>/in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.lj.log
+    $ mpirun -np 40 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in <LOCALDIR>/in.your_workload -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.your_workload.log
 
 ***
 
@@ -69,13 +69,13 @@ To run the container on multinode, you need to do the following:
  * Specify host names to run on in “hosts” file
  * Select a communication and Nextork fabric at runtime
  
- Here is an example to run interactively on 4 node with 24 cores/socket:
+ Here is an example to run interactively on 4 node with 24 cores/socket/node:
 
 	$ cat nodelist 
-	container-compute001
-	container-compute002
-	container-compute003
-	container-compute004
+	compute001
+	compute002
+	compute003
+	compute004
 	
 	source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
 	source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh
@@ -85,7 +85,7 @@ To run the container on multinode, you need to do the following:
 	$ export I_MPI_DEVICE=ssm          # Set TCP + shared memory (for SMP clusters connected via Ethernet)
 	
 	# run lammps on 4  Intel® Xeon® Gold nodes
-	$ mpirun -hostfile nodelist -ppn 48 -np 192 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in /opt/intel/lammps/in.intel.lj -log none -pk intel 0 omp 2 -sf intel -v m 0.2
+	$ mpirun -hostfile nodelist -ppn 48 -np 192 singularity exec lammps.img /opt/intel/lammps/lmp_intel_cpu_intelmpi -in /opt/intel/lammps/in.intel.airebo -log none -pk intel 0 omp 2 -sf intel -v m 0.2
 
 ***
 ### Recommended links:
