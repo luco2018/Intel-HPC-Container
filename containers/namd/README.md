@@ -21,7 +21,7 @@ The NAMD containers provides three NAMD binaries available inside the container 
 
 	$ namd2_16u4 		# it is binary only for 1 node run 
 	$ namd2_mpi_SKX_16u4 	# it is multimode binary with MPI calls
-	$ namd2_SKX_mpi_MEP 	# it is multimode binary with OFI calls and Multi-EP support( best practices are not available yet)
+	$ namd2_ofi_SKX 	# it is multimode binary with OFI calls and Multi-EP support( best practices are not available yet)
 
 
 ## Get namd image:
