@@ -17,7 +17,6 @@ Include: yum
 	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/run.gz.tar
 	
 	tar -xvf run.gz.tar --strip-components=1 -C $WORKDIR
-	bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2        
 
         if [ "$(ls -A $WORKDIR)" ]; then
            echo "Files are copies here $WORKDIR"
@@ -50,6 +49,7 @@ Include: yum
 %runscript 
         echo "This is what happens when you run the container..."
         WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
+        bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2 
         cd $WORKDIR/samples/adh
           
        $WORKDIR/bin/gmx_mpi mdrun -nsteps 2000 -resethway -noconfout
