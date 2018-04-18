@@ -13,9 +13,11 @@ Include: yum
            echo "failed to create tempdir directory..."
            exit 1
        fi
-
-        cp -r /localdisk/sdouyeb/gromacs/* $WORKDIR
-        bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2        
+        
+	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/run.gz.tar
+	
+	tar -xvf run.gz.tar -strip-components=1 -C $WORKDIR
+	bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2        
 
         if [ "$(ls -A $WORKDIR)" ]; then
            echo "Files are copies here $WORKDIR"
