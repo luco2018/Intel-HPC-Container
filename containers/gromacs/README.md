@@ -65,7 +65,7 @@ To run the container on multinode, you need to do the following:
  * Setup your cluster
  * Get the gromacs container
  * Source mpi
- * Specify host names to run on in “hosts” file
+ * Specify host names to run on in a “hosts” file
  * Select a communication and Nextork fabric at runtime
  
  Here is an example to run interactively GROMACS with the lignocellulose sample on 4 node with 24 cores/socket/node setup on the cloud:
