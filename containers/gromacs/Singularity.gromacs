@@ -42,6 +42,9 @@ Include: yum
 	#installing gcc
         yum install gcc -y
         yum install bc -y
+	
+	WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
+        bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2 
 
 %environment
   source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
@@ -49,7 +52,6 @@ Include: yum
 %runscript 
         echo "This is what happens when you run the container..."
         WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
-        bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2 
         cd $WORKDIR/samples/adh
           
        $WORKDIR/bin/gmx_mpi mdrun -nsteps 2000 -resethway -noconfout
