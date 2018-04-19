@@ -9,7 +9,7 @@ Below are the details of how to get and run GROMACS container for best performan
 ***
 > PS: Note that the following prerequisites must be fulfilled before running the container:
 
-  - Intel® Xeon® Gold family system or cluster. Cloud or bare metal 
+  - An Intel® Xeon® Gold family system or cluster. Cloud or bare metal 
 
   - Singularity must be installed and operational
 
@@ -68,7 +68,7 @@ To run the container on multinode, you need to do the following:
  * Specify host names to run on in “hosts” file
  * Select a communication and Nextork fabric at runtime
  
- Here is an example to run interactively on 4 node with 24 cores/socket/node setup on the cloud:
+ Here is an example to run interactively GROMACS with the lignocellulose sample on 4 node with 24 cores/socket/node setup on the cloud:
  
 	$ cat nodelist 
 	compute001
