@@ -23,9 +23,11 @@ Include: yum
         fi
 
         chmod -R 777 $WORKDIR
+	
+	cd /tmp/
+        bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2
 
         exit 0
-
 
 %post
 
@@ -42,9 +44,6 @@ Include: yum
 	#installing gcc
         yum install gcc -y
         yum install bc -y
-	
-	WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
-        bunzip2 $WORKDIR/samples/lignocellulose/topol_rf.tpr.bz2 
 
 %environment
   source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
