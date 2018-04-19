@@ -11,6 +11,7 @@ Include: yum
 	yum install wget -y
         yum install vi -y	
         yum install which -y
+	yum install tar -y
 	yum install bzip2 -y
 
 	#installing runtime libs for virtual machines
