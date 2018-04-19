@@ -6,7 +6,7 @@ Include: yum
 
 %help
 
-$setup
+%setup
 
         WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
         mkdir -p $WORKDIR
