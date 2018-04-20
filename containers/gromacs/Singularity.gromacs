@@ -19,7 +19,7 @@ Include: yum
 	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/topol_rf.tpr
 	tar -xvf run.gz.tar --strip-components=1 -C $WORKDIR
 	
-	cp topol_rf.tpr /opt/intel/gromacs/samples/lignocellulose
+	cp topol_rf.tpr /opt/intel/gromacs/samples/lignocellulose/
 
         if [ "$(ls -A $WORKDIR)" ]; then
            echo "Files are copies here $WORKDIR"
