@@ -18,8 +18,7 @@ Include: yum
 	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/run.gz.tar
 	tar -xvf run.gz.tar --strip-components=1 -C $WORKDIR
 	
-	mkdir $WORKDIR/opt/intel/gromacs/samples/lignocellulose/
-	cd $WORKDIR/opt/intel/gromacs/samples/lignocellulose/
+	cd $WORKDIR/samples/lignocellulose/
 	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/topol_rf.tpr
 	
 	if [ "$(ls -A $WORKDIR)" ]; then
