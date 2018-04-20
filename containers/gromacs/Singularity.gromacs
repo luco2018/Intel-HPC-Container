@@ -16,12 +16,12 @@ Include: yum
        fi
         
 	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/run.gz.tar
-	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/topol_rf.tpr
 	tar -xvf run.gz.tar --strip-components=1 -C $WORKDIR
 	
-	cp topol_rf.tpr $WORKDIR/opt/intel/gromacs/samples/lignocellulose/
-
-        if [ "$(ls -A $WORKDIR)" ]; then
+	cd $WORKDIR/opt/intel/gromacs/samples/lignocellulose/
+	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/topol_rf.tpr
+	
+	if [ "$(ls -A $WORKDIR)" ]; then
            echo "Files are copies here $WORKDIR"
         fi
 
