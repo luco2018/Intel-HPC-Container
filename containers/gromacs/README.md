@@ -30,7 +30,7 @@ See instructions [here](https://github.com/intel/Intel-HPC-Container/wiki/3.-Doc
     $ sudo singularity build --writable gromacs.img shub://intel/Intel-HPC-Container:gromacs
     
  ***
-## Run gromcs  on single node: 
+## Run gromacs  on single node: 
 
 1.  In Detached mode:
 	
