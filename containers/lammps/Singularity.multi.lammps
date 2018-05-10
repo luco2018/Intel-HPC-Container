@@ -73,13 +73,5 @@ echo " run us: mpirun -hostfile nodelist -ppn 48 -np 192 singularity run --app m
 
 WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
 cd $WORKDIR
-
-files=`echo in.intel.*`
-
-for file in $files
-do
-  name=`echo $file | sed 's/in\.intel\.//g'`
-  echo -n "Running: $name "
-  ./lmp_intel_cpu_intelmpi -in $file -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/$name.log
-  grep 'Perform' /tmp/$name.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
-done
+  ./lmp_intel_cpu_intelmpi -in in.intel.lc -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/lc.log
+  grep 'Perform' /tmp/lc.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
