@@ -5,9 +5,11 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 
 %help
-This is a container to run NAMD binarie on SKL machine.
- - Run the container:
+This is a container to run NAMD binarie on single and multinode SKL machine.
+ - Run the container on single node:
  	singularity run shub://intel/Intel-HPC-Container:namd
+ - Run the container on multinode:
+ 	singularity 
 
 %setup
 	# Create a working directory 
@@ -72,3 +74,10 @@ This is a container to run NAMD binarie on SKL machine.
 	./namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
 	./namd2_16u4 +p 40 stmv/stmv.namd +pemap 0-39
 	echo "NAMD run completed"
+
+%apprun m_namd
+
+# mpiexec.hydra -hostfile ./nodelist -n 4 -ppn 2 
+PPN=39
+./namd2_mpi_SKX_16u4 +ppn $PPN apoa1/apoa1.namd +pemap 1-$PPN +commap 0  
+./namd2_mpi_SKX_16u4 +ppn $PPN stmv/stmv.namd +pemap 1-$PPN +commap 0 
