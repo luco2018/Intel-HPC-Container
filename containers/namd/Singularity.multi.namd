@@ -75,7 +75,7 @@ This is a container to run NAMD binarie on single and multinode SKL machine.
 	./namd2_16u4 +p 40 stmv/stmv.namd +pemap 0-39
 	echo "NAMD run completed"
 
-%apprun m_namd
+%apprun multinode
 
 echo "This is what happens when you run the m_namd container..."
 WORKDIR="$SINGULARITY_ROOTFS/opt/intel/namd"
