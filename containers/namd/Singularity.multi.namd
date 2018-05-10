@@ -77,6 +77,9 @@ This is a container to run NAMD binarie on single and multinode SKL machine.
 
 %apprun m_namd
 
+echo "This is what happens when you run the m_namd container..."
+WORKDIR="$SINGULARITY_ROOTFS/opt/intel/namd"
+cd $WORKDIR
 # mpiexec.hydra -hostfile ./nodelist -n 4 -ppn 2 
 PPN=39
 ./namd2_mpi_SKX_16u4 +ppn $PPN apoa1/apoa1.namd +pemap 1-$PPN +commap 0  
