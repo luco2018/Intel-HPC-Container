@@ -82,5 +82,11 @@ WORKDIR="$SINGULARITY_ROOTFS/opt/intel/namd"
 cd $WORKDIR
 # mpiexec.hydra -hostfile ./nodelist -n 4 -ppn 2 
 PPN=39
-./namd2_mpi_SKX_16u4 +ppn $PPN apoa1/apoa1.namd +pemap 1-$PPN +commap 0  
+
+echo "running apoa workoad now"
+./namd2_mpi_SKX_16u4 +ppn $PPN apoa1/apoa1.namd +pemap 1-$PPN +commap 0 
+
+echo "running stmv workload now"
 ./namd2_mpi_SKX_16u4 +ppn $PPN stmv/stmv.namd +pemap 1-$PPN +commap 0 
+
+echo "all done!"
