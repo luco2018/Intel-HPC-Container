@@ -52,8 +52,9 @@ cd $WORKDIR
 
 NUMCORES="$@"
 if [ -z "$NUMCORES" ]; then
-        NUMCORES=40
-	echo "You didn't specify number of cores. So running with 40 cores"
+        NUMCORES=20
+	echo "You should run your container as "singularity run lammps.simg NUMCORES_arg"
+	echo "SInce uou didn't specify a number of cores, we are running with $NUMCORES cores"
 fi
 
 files=`echo in.intel.*`
@@ -75,3 +76,16 @@ WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
 cd $WORKDIR
   ./lmp_intel_cpu_intelmpi -in in.intel.lc -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/lc.log
   grep 'Perform' /tmp/lc.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
+
+%apprun nestedmpi
+
+WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
+cd $WORKDIR
+
+NUMCORES="$@"
+if [ -z "$NUMCORES" ]; then
+        NUMCORES=20
+	echo "You didn't specify number of cores. So running with 20 cores"
+fi
+
+mpirun -np $NUMCORES ./lmp_intel_cpu_intelmpi -in in.intel.airebo -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/in.intel.airebo.log
