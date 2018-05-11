@@ -53,8 +53,8 @@ cd $WORKDIR
 NUMCORES="$@"
 if [ -z "$NUMCORES" ]; then
         NUMCORES=20
-	echo "You should run your container as "singularity run lammps.simg NUMCORES_arg"
-	echo "SInce uou didn't specify a number of cores, we are running with $NUMCORES cores"
+	echo "You should run your container as singularity run lammps.simg NUMCORES_arg "
+	echo "Since uou didn't specify a number of cores, we are running with $NUMCORES cores"
 fi
 
 files=`echo in.intel.*`
