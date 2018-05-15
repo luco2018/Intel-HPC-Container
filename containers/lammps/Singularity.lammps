@@ -4,6 +4,16 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 
 Include: yum
 
+%help
+  1. To run the container on single node with default workloads:
+        singularity run $containerName.simg
+	
+  2. To run container on multinode with the workload from the container (airebo, dpd, eam, lc, lj, water, rhodo, sw):
+        mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg $workloadname" 
+        
+	Example to run the polyethelene(airebo) workload:
+	mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo
+
 %setup
 
 
@@ -66,3 +76,24 @@ do
   grep 'Perform' /tmp/$name.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
 done
 
+%apprun multinode
+
+WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
+cd $WORKDIR
+
+WORKLOAD="$1"
+if [ -z "$WORKLOAD" ]; then
+        echo " Run as:
+	       mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg $workloadname
+	       
+	       You can choose from these workloads: airebo, dpd, eam, lc, lj, water, rhodo, sw
+	       
+	       For example, to run the polyethelene(airebo) workload, run:
+	       mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo"  
+	 exit 0
+fi
+
+echo "Runniing $WORKLOAD"
+
+  ./lmp_intel_cpu_intelmpi -in in.intel.$WORKLOAD -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/$WORKLOAD.log
+  grep 'Perform' /tmp/$WORKLOAD.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
