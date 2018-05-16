@@ -5,10 +5,10 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 Include: yum
 
 %help
-  1. To run the container on single node with default workloads:
+  1. Run the container on single node with default workloads:
         singularity run $containerName.simg
 	
-  2. To run container on multinode with the workload from the container (airebo, dpd, eam, lc, lj, water, rhodo, sw):
+  2. Run container on multinode with the workload from the container (airebo, dpd, eam, lc, lj, water, rhodo, sw):
         mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg $workloadname" 
         
 	Example to run the polyethelene(airebo) workload:
@@ -83,14 +83,9 @@ cd $WORKDIR
 
 WORKLOAD="$1"
 if [ -z "$WORKLOAD" ]; then
-        echo " Run as:
-	       mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg $workloadname
-	       
-	       You can choose from these workloads: airebo, dpd, eam, lc, lj, water, rhodo, sw
-	       
-	       For example, to run the polyethelene(airebo) workload, run:
-	       mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo"  
-	 exit 0
+        echo " You didn't specify a workload. Please try again!
+	Run: singularity help $containerName.simg for runing instructions."
+	exit 1
 fi
 
 echo "Runniing $WORKLOAD"
