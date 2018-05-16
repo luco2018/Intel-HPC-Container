@@ -6,8 +6,14 @@ Include: yum
 
 %help
 This is a container to run NAMD binarie on SKL machine.
- - Run the container:
- 	singularity run shub://intel/Intel-HPC-Container:namd
+ 1. Run the container on single node with default workloads:
+        singularity run $containerName.simg
+	
+  2. Run container on multinode with the workload from the container (apoa1 and stmv):
+        mpiexec.hydra -hostfile ./nodelist -n $NUMNODES -ppn $PPN singularity run --app multinode namd.simg $WORKLOAD $PPN|tee namd.log
+        
+	Example to run the apoa1 workload:
+	mpiexec.hydra -hostfile ./nodelist -n 4 -ppn 2 singularity run --app multinode namd.simg apoa 39 |tee namd.log "
 
 %setup
 	# Create a working directory 
@@ -72,3 +78,25 @@ This is a container to run NAMD binarie on SKL machine.
 	./namd2_16u4 +p 40 apoa1/apoa1.namd +pemap 0-39
 	./namd2_16u4 +p 40 stmv/stmv.namd +pemap 0-39
 	echo "NAMD run completed"
+	
+
+%apprun multinode
+
+echo "This is what happens when you run the namd multinode container..."
+WORKDIR="$SINGULARITY_ROOTFS/opt/intel/namd"
+cd $WORKDIR
+
+
+WORKLOAD="$1"
+PPN="$2"
+
+if [ -z "$WORKLOAD" ] || [ -z "$PPN" ] ; then
+        echo " You didn't specify a workload and the number of PPN. Please try again!
+	Run: singularity help $containerName.simg for runing instructions."
+	exit 1
+fi
+
+echo "running $WORKLOAD workoad now"
+./namd2_mpi_SKX_16u4 +ppn $PPN $WORKLOAD/$WORKLOAD.namd +pemap 1-$PPN +commap 0 
+
+echo "all done!"
