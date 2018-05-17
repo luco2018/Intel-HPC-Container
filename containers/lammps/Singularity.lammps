@@ -88,7 +88,7 @@ if [ -z "$WORKLOAD" ]; then
 	exit 1
 fi
 
-echo "Runniing $WORKLOAD"
+echo "Running $WORKLOAD"
 
   ./lmp_intel_cpu_intelmpi -in in.intel.$WORKLOAD -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/$WORKLOAD.log
   grep 'Perform' /tmp/$WORKLOAD.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
