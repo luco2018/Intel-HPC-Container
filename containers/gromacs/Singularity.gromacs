@@ -4,11 +4,59 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 
 Include: yum
 
+################################################################################################################################
 %help
+################################################################################################################################
+USAGE: 
+	- Run as an executable file:
+		$./container-name.simg 
+		
+	- Run on cluster/multinode:
+		mpirun -np $NP singularity exec $container-name
+		
+	- Run from inside the container:
+		$ singularity shell $container-name.simg
+		$ cd /$WORKDIR
+		$ source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+		$ $RunCommand
+	
+	- Run using the exec command (http://singularity.lbl.gov/docs-exec):
+		$ singularity exec $container-name.simg $SINGULARITY_ROOTFS/$WORKDIR/$BIN $LocalPath/$WORKLOAD arg arg ...
+	
+	- List availailable apps available inside the container:
+		$ singularity apps $container-name.simg
+		
+	- Run an application ($app-name):
+        	$ singularity run --app $app-name $container-name
+	
+EXAMPLES:
+    Single node run:
+	$ ./gromacs.simg 
+	OR
+	$ singularity exec gromacs.simg /gromacs/bin/gmx_mpi mdrun -s /gromacs/samples/adh/topol.tpr -nsteps 2000 -resethway -noconfout
 
+    Cluster run:
+	$ mpirun -n 160 -hostfile nodelist singularity run gromacs.simg
+
+################################################################################################################################
+%environment
+################################################################################################################################
+  source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+
+################################################################################################################################
+%runscript
+################################################################################################################################
+        echo "This is what happens when you run the container..."
+        WORKDIR="$SINGULARITY_ROOTFS/gromacs"
+        cd $WORKDIR/samples/adh
+          
+       $WORKDIR/bin/gmx_mpi mdrun -nsteps 2000 -resethway -noconfout
+
+################################################################################################################################
 %setup
+################################################################################################################################
 
-        WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
+        WORKDIR="$SINGULARITY_ROOTFS/gromacs"
         mkdir -p $WORKDIR
         if [ ! -x "$WORKDIR" ]; then
            echo "failed to create tempdir directory..."
@@ -20,18 +68,16 @@ Include: yum
 	
 	cd $WORKDIR/samples/lignocellulose/
 	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/gromacs/topol_rf.tpr
-	
-	if [ "$(ls -A $WORKDIR)" ]; then
-           echo "Files are copies here $WORKDIR"
-        fi
 
         chmod -R 777 $WORKDIR
 	
 	exit 0
 
+################################################################################################################################
 %post
+################################################################################################################################
 
-	yum install wget -y
+        yum install wget -y
         yum install vi -y	
         yum install which -y
 	yum install tar -y
@@ -44,21 +90,7 @@ Include: yum
 
 	#installing gcc
         yum install gcc -y
-        yum install bc -y
-
-
-%environment
-  source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
-
-%runscript 
-        echo "This is what happens when you run the container..."
-        WORKDIR="$SINGULARITY_ROOTFS/opt/intel/gromacs"
-        cd $WORKDIR/samples/adh
-          
-       $WORKDIR/bin/gmx_mpi mdrun -nsteps 2000 -resethway -noconfout
-
-
-       
+        yum install bc -y    
 
        
 
