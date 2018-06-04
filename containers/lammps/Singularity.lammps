@@ -4,81 +4,72 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 
 Include: yum
 
+################################################################################################################################
 %help
-  1. Run the container on single node with default workloads:
-        singularity run $containerName.simg
+################################################################################################################################
+USAGE: 
+- Run as an executable file:
+    $./container-name.simg $NUMCORES
+
+- Run on cluster/multinode:
+    $ mpirun -np $NP singularity run $container-name
+    
+- Run from inside the container:
+    $ singularity shell $container-name.simg
+    $ cd /$WORKDIR
+    $ source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+    $ <YourRunCommand>
 	
-  2. Run container on multinode with the workload from the container (airebo, dpd, eam, lc, lj, water, rhodo, sw):
-        mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg $workloadname" 
-        
-	Example to run the polyethelene(airebo) workload:
-	mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo
-
-%setup
-
-
-WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
-        mkdir -p $WORKDIR
-        if [ ! -x "$WORKDIR" ]; then
-           echo "failed to create working directory..."
-           exit 1
-       fi
-
-        wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/lammps/bin.tar.gz
-        tar -xvf bin.tar.gz -C $WORKDIR --strip-components=1
-
-        if [ "$(ls -A $WORKDIR)" ]; then
-           echo "Files are copies here $WORKDIR"
-        fi
-
-        chmod -R 777 $WORKDIR
-
-        exit 0
-
-%post
-	yum install wget -y
-        yum -y install which
-	yum -y install vi
-       		
-	#installing runtime libs for virtual machines
-        rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
-	rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
-	yum install intel-psxe-runtime -y
-
-	#installing gcc
-        yum install gcc -y
-        yum install bc -y
-
+- Run using the exec command (http://singularity.lbl.gov/docs-exec):
+    $ singularity exec $container-name.simg $SINGULARITY_ROOTFS/$WORKDIR/$BIN $LocalPath/$WORKLOAD arg arg ...
+	
+- List apps available inside the container (incase they is more than one app inside the container):
+    $ singularity apps <container-name>
+	
+- Run an application ($app-name):
+    $ singularity run --app $app-name <container-name>
+	
+EXAMPLES:
+    
+    Run the container on single node with default workloads (airebo, dpd, eam, lc, lj, water, rhodo, sw):
+        $ singularity run lammps.simg
+	
+    Run the container on multinode with the polyethelene(airebo) workload: 
+	$ mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo
+  
+################################################################################################################################
 %environment
-  source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
-  source /opt/intel/psxe_runtime/linux/mpi/bin64/mpivars.sh
-  source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64
-  export I_MPI_SHM_LMT=shm
-	
-%runscript 
+################################################################################################################################
+source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+source /opt/intel/psxe_runtime/linux/mpi/bin64/mpivars.sh
+source /opt/intel/psxe_runtime/linux/mkl/bin/mklvars.sh intel64
+export I_MPI_SHM_LMT=shm
 
-WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
+################################################################################################################################
+%runscript 
+################################################################################################################################
+WORKDIR="$SINGULARITY_ROOTFS/lammps"
 cd $WORKDIR
 
 NUMCORES="$@"
 if [ -z "$NUMCORES" ]; then
-        NUMCORES=40
-	echo "You didn't specify number of cores. So running with 40 cores"
+        NUMCORES=20
+	echo "You didn't specify number of cores. So running with $NUMCORES cores"
 fi
 
 files=`echo in.intel.*`
-
 for file in $files
 do
   name=`echo $file | sed 's/in\.intel\.//g'`
   echo -n "Running: $name "
-  mpirun -np $NUMCORES ./lmp_intel_cpu_intelmpi -in $file -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/$name.log
-  grep 'Perform' /tmp/$name.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
+  mpirun -np $NUMCORES ./lmp_intel_cpu_intelmpi -in $file -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen $name.log
+  grep 'Perform' $name.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
 done
 
+################################################################################################################################
 %apprun multinode
-
-WORKDIR="$SINGULARITY_ROOTFS/opt/intel/lammps"
+################################################################################################################################
+WORKDIR="$SINGULARITY_ROOTFS/lammps"
 cd $WORKDIR
 
 WORKLOAD="$1"
@@ -90,5 +81,42 @@ fi
 
 echo "Running $WORKLOAD"
 
-  ./lmp_intel_cpu_intelmpi -in in.intel.$WORKLOAD -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen /tmp/$WORKLOAD.log
-  grep 'Perform' /tmp/$WORKLOAD.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
+  ./lmp_intel_cpu_intelmpi -in in.intel.$WORKLOAD -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen $WORKLOAD.log
+  grep 'Perform' $WORKLOAD.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
+
+################################################################################################################################
+%setup
+################################################################################################################################
+
+WORKDIR="$SINGULARITY_ROOTFS/lammps"
+mkdir -p $WORKDIR
+if [ ! -x "$WORKDIR" ]; then
+   echo "failed to create working directory..."
+   exit 1
+fi
+
+wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/lammps/bin.tar.gz
+tar -xvf bin.tar.gz -C $WORKDIR --strip-components=1
+
+if [ "$(ls -A $WORKDIR)" ]; then
+   echo "Files are copies here $WORKDIR"
+fi
+
+chmod -R 777 $WORKDIR
+exit 0
+
+################################################################################################################################
+%post
+################################################################################################################################
+yum install wget -y
+yum -y install which
+yum -y install vi
+     	
+#installing runtime libs for virtual machines
+rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
+rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+yum install intel-psxe-runtime -y
+
+#installing gcc
+yum install gcc -y
+yum install bc -y
