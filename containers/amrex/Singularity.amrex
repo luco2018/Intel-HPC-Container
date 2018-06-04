@@ -7,86 +7,83 @@ Include: yum
 ################################################################################################################################
 %help
 ################################################################################################################################
-USAGE: 
-	- Run as an executable file:
-		$./container-name.simg $NUMCORES
-	
-	- Run on cluster/multinode:
-		mpirun -np $NP singularity exec $container-name
-		
-	- Run from inside the container:
-		$ singularity shell $container-name.simg
-		$ cd /$WORKDIR
-		$ source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
-		$ $RunCommand
-	
-	- Run using the exec command (http://singularity.lbl.gov/docs-exec):
-		singularity exec $container-name.simg $SINGULARITY_ROOTFS/$WORKDIR/$BIN $LocalPath/$WORKLOAD arg arg ...
-	
-	- List apps available inside the container (if any):
-		$ singularity apps $container-name.simg
-		
-	- Run an application ($app-name):
-        $ singularity run --app $app-name $container-name
-	
 EXAMPLES:
-    Single node run:
-	$ ./amrex.simg 40
-	OR
-	$ singularity exec amrex.simg /amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex /amrex/inputs 
+ Single node run:
+   $ ./amrex.simg 40
+OR
+   $ singularity exec amrex.simg /amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex /amrex/inputs 
 
-    Cluster run:
-	$ mpirun -hostfile nodelist -n 4 -ppn 1 amrex.simg 40
+ Cluster run:
+    $ mpirun -hostfile nodelist -n 4 -ppn 1 amrex.simg 40
 
+USAGE: 
+- Run as an executable file:
+     $./container-name.simg $NUMCORES
+
+- Run on cluster/multinode:
+     $ mpirun -np $NP singularity exec $container-name
+	
+- Run from inside the container:
+     $ singularity shell $container-name.simg
+     $ cd /$WORKDIR
+     $ source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+     $ $RunCommand
+
+- Run using the exec command (http://singularity.lbl.gov/docs-exec):
+     $ singularity exec $container-name.simg $SINGULARITY_ROOTFS/$WORKDIR/$BIN $LocalPath/$WORKLOAD arg arg ...
+
+- List apps available inside the container (if any):
+     $ singularity apps $container-name.simg
+	
+- Run an application ($app-name):
+     $ singularity run --app $app-name $container-name
+	
 ################################################################################################################################
 %environment
 ################################################################################################################################
-	export OMP_NUM_THREADS="$@"
-	source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+ export OMP_NUM_THREADS="$@"
+ source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
 
 ################################################################################################################################
 %runscript
 ################################################################################################################################
-	cd $SINGULARITY_ROOTFS/amrex/
-	dir=`pwd`
-	echo $dir
-	./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs | tee $dir/amrex.log
-	echo "Amrex run completed"
+cd $SINGULARITY_ROOTFS/amrex/
+dir=`pwd`
+echo $dir
+./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs | tee $dir/amrex.log
+echo "Amrex run completed"
 ################################################################################################################################
 %setup
 ################################################################################################################################
-        #Create a working directory 
-        mkdir -p $SINGULARITY_ROOTFS/amrex
-        if [ ! -x "$SINGULARITY_ROOTFS/amrex" ]; then
-           echo "failed to create amrex directory..."
-           exit 1
-        fi
-	
-	wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
-	wget https://github.com/Smahane/Intel-HPC-Container/raw/master/containers/amrex/inputs
-	wget https://github.com/Smahane/Intel-HPC-Container/raw/master/containers/amrex/runlog
-	wget https://github.com/Smahane/Intel-HPC-Container/raw/master/containers/amrex/probin
-	
-	WORKDIR= "$SINGULARITY_ROOTFS/amrex"
-	 cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $WORKDIR
-	 cp -rf inputs $WORKDIR
-	 cp -rf runlog $WORKDIR 
-	 cp -rf probin $WORKDIR
+#Create a working directory 
+WORKDIR= "$SINGULARITY_ROOTFS/amrex"
+mkdir -p $WORKDIR
+if [ ! -x "$WORKDIR" ]; then
+   echo "failed to create amrex directory..."
+   exit 1
+fi
 
-        chmod -R 777 $SINGULARITY_ROOTFS/amrex/*
+wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
+wget https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/inputs
+wget https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/runlog
+wget https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/probin
 
-        exit 0
-	
+cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $WORKDIR
+cp -rf inputs $WORKDIR
+cp -rf runlog $WORKDIR 
+cp -rf probin $WORKDIR
+chmod -R 777 $SINGULARITY_ROOTFS/amrex/*
+exit 0
+
 ################################################################################################################################
 %post
 ################################################################################################################################
-	yum install wget -y
-       		
-	#installing runtime libs for virtual machines
-        rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
-	rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
-	yum install intel-psxe-runtime -y
-
-	#installing gcc
-        yum install gcc -y
-        yum install bc -y
+yum install wget -y
+       	
+#installing runtime libs for virtual machines
+rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
+rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+yum install intel-psxe-runtime -y
+#installing gcc
+yum install gcc -y
+yum install bc -y
