@@ -4,56 +4,88 @@ MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearc
 
 Include: yum
 
+################################################################################################################################
 %help
-echo "this is a container to run MILC binarie on SKL machine"
+################################################################################################################################
 
-%setup
-echo $PWD
-        
-        #create a working directory
-        mkdir -p $SINGULARITY_ROOTFS/tempdir
-        if [ ! -x "$SINGULARITY_ROOTFS/tempdir" ]; then
-           echo "failed to create tempdir directory..."
-           exit 1
-        fi
-	wget https://github.com/Smahane/Intel-HPC-Container/tree/master/containers/milc/run.tar.gz
-	 tar -zxvf run.tar.gz -C $SINGULARITY_ROOTFS/tempdir
-	 
-        if [ "$(ls -A $SINGULARITY_ROOTFS/tempdir/)" ]; then
-		   echo "Files are copies here $SINGULARITY_ROOTFS/tempdir"
-		   ls $SINGULARITY_ROOTFS/tempdir/	
-        fi
+EXAMPLES:
+   Run the container on single node with 24^4 Lattice points per Node :
+     $ singularity run milc.simg 2 20
 
-	chmod -R 777 $SINGULARITY_ROOTFS/tempdir/*
-
-        exit 0
-
-%post
-        yum install wget -y 
-
-        #installing runtime libs for virtual machines
-        rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
-	rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+USAGE: 
+- Run as an executable file:
+    $./<container-name.simg> $RANKS $THREADS
+              Where RANKS is the number of MPI Ranks you want to run	
+              Where THREADS is the number of OpenMP Threads you want to run
 	
-	yum install intel-psxe-runtime -y
+- Run on cluster/multinode (if available):
+    $ mpirun -np $NP singularity run $container-name
+    
+- Run from inside the container:
+    $ singularity shell $container-name.simg
+    $ cd /$WORKDIR
+    $ source /opt/intel/psxe_runtime/linux/bin/psxevars.sh
+    $ $RunCommand
+    
+- Run using the exec command (http://singularity.lbl.gov/docs-exec):
+    $ singularity exec $container-name.simg $SINGULARITY_ROOTFS/$WORKDIR/$BIN $LocalPath/$WORKLOAD arg arg ...
+	
+- List apps available inside the container (if more than one app is available):
+    $ singularity apps $container-name.simg
+	
+- Run an application ($app-name):
+     $ singularity run --app $app-name $container-name
 
-        #installing gcc
-        yum install gcc -y
-        yum install bc -y
 
+################################################################################################################################
+%setup
+################################################################################################################################
+WORKDIR="$SINGULARITY_ROOTFS/milc"
+mkdir -p $WORKDIR
+if [ ! -x "$WORKDIR" ]; then
+   echo "failed to create working directory..."
+   exit 1
+fi
+
+wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/milc/run.tar.gz
+tar -zxvf run.tar.gz -C $WORKDIR
+
+if [ "$(ls -A $WORKDIR)" ]; then
+   echo "Files are copies here $WORKDIR"
+fi
+
+chmod -R 777 $WORKDIR/*
+exit 0
+
+################################################################################################################################
+%post
+################################################################################################################################
+yum install wget -y
+yum -y install which
+yum -y install vi
+
+#installing runtime libs for virtual machines
+rpm --import https://yum.repos.intel.com/2018/setup/RPM-GPG-KEY-intel-psxe-runtime-2018
+rpm -Uhv https://yum.repos.intel.com/2018/setup/intel-psxe-runtime-2018-reposetup-1-0.noarch.rpm
+
+yum install intel-psxe-runtime -y
+#installing gcc
+yum install gcc -y
+yum install bc -y
+
+################################################################################################################################
 %environment
-	echo "set the env variable"
-	OMP_NUM_THREADS=5
-	KMP_AFFINITY='granularity=fine,scatter'
+################################################################################################################################
+source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
+OMP_NUM_THREADS=5
+KMP_AFFINITY='granularity=fine,scatter'
 
+################################################################################################################################
 %runscript 
-
-	source /opt/intel/psxe_runtime/linux/bin/compilervars.sh intel64
-	echo "run milc for SKL"
-
-	cd $SINGULARITY_ROOTFS/tempdir/run/	
-	mpiexec.hydra -n 8 $SINGULARITY_ROOTFS/tempdir/run/su3_rhmd_hisq.skx < $SINGULARITY_ROOTFS/tempdir/run/params.24x24x24x24 |tee milc.su3_rhmd_hisq.log
-
-         echo "parse result"
- 	./parse_milc.sh -l qphix -m flops -r milc.su3_rhmd_hisq.log
+################################################################################################################################
+WORKDIR="$SINGULARITY_ROOTFS/milc"
+cd $WORKDIR/run/	
+mpiexec.hydra -n 8 ./su3_rhmd_hisq.skx < params.24x24x24x24 2>&1 |tee milc.su3_rhmd_hisq.log
+echo "parse result"
+./parse_milc.sh -l qphix -m flops -r milc.su3_rhmd_hisq.log
 
