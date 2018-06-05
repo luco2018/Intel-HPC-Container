@@ -49,8 +49,8 @@ USAGE:
 ####################################################################################
 WORKDIR= "$SINGULARITY_ROOTFS/amrex"
 cd $WORKDIR
-dir=`pwd`
-./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs | tee $dir/amrex.log
+
+./Nyx3d.intel.MPI.OMP.SKLAVX512.ex inputs | tee amrex.log
 echo "Amrex run completed"
 ####################################################################################
 %setup
@@ -63,16 +63,13 @@ if [ ! -x "$WORKDIR" ]; then
    exit 1
 fi
 
+cd $WORKDIR
 wget https://github.com/intel/Intel-HPC-Container/raw/master/containers/amrex/Nyx3d.intel.MPI.OMP.SKLAVX512.ex
 wget https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/inputs
 wget https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/runlog
 wget https://github.com/intel/Intel-HPC-Container/blob/master/containers/amrex/probin
 
-cp -rf Nyx3d.intel.MPI.OMP.SKLAVX512.ex $WORKDIR
-cp -rf inputs $WORKDIR
-cp -rf runlog $WORKDIR 
-cp -rf probin $WORKDIR
-chmod -R 777 $SINGULARITY_ROOTFS/amrex/*
+chmod -R 777 $WORKDIR/*
 exit 0
 
 ####################################################################################
