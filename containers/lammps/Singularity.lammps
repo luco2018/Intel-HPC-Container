@@ -7,7 +7,16 @@ Include: yum
 ####################################################################################
 %help
 ####################################################################################
+EXAMPLES:
+    
+    Run the container on single node with default workloads (airebo, dpd, eam, lc, lj, water, rhodo, sw):
+        $ singularity run lammps.simg $NUMCORES
+	
+    Run the container on multinode with the polyethelene(airebo) workload: 
+	$ mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo
+
 USAGE: 
+
 - Run as an executable file:
     $./container-name.simg $NUMCORES
 
@@ -28,15 +37,7 @@ USAGE:
 	
 - Run an application ($app-name):
     $ singularity run --app $app-name <container-name>
-	
-EXAMPLES:
-    
-    Run the container on single node with default workloads (airebo, dpd, eam, lc, lj, water, rhodo, sw):
-        $ singularity run lammps.simg
-	
-    Run the container on multinode with the polyethelene(airebo) workload: 
-	$ mpirun -hostfile nodelist -ppn $PPN -np $NP singularity run --app multinode lammps.simg airebo
-  
+	  
 ####################################################################################
 %environment
 ####################################################################################
@@ -80,9 +81,9 @@ if [ -z "$WORKLOAD" ]; then
 fi
 
 echo "Running $WORKLOAD"
-
-  ./lmp_intel_cpu_intelmpi -in in.intel.$WORKLOAD -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen $WORKLOAD.log
-  grep 'Perform' $WORKLOAD.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
+results_path="$HOME"
+  ./lmp_intel_cpu_intelmpi -in in.intel.$WORKLOAD -log none -pk intel 0 omp 2 -sf intel -v m 0.2 -screen $results_path/$WORKLOAD.log
+  grep 'Perform' $results_path/$WORKLOAD.log | awk 'BEGIN{n=1}n%2==0{c=NF-1; print "Performance:",$c,"timesteps/sec"}{n++}'
 
 ####################################################################################
 %setup
